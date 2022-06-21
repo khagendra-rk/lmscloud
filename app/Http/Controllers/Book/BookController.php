@@ -116,8 +116,8 @@ class BookController extends Controller
             'book_type'     => ['nullable'],
             'faculties'     => ['nullable', 'array'],
             'faculties.*'   => ['nullable', 'integer', 'exists:faculties,id'],
-            'semesters'     => ['required', 'array'],
-            'semesters.*'   => ['required', 'integer', 'min:1', 'max:8'],
+            'semesters'     => ['nullable', 'array'],
+            'semesters.*'   => ['nullable', 'integer', 'min:1', 'max:8'],
         ]);
 
         if (count($data['faculties']) != count($data['semesters'])) {
@@ -146,7 +146,7 @@ class BookController extends Controller
         $book->fresh();
         $book->load('faculties');
 
-        return response()->json($book);
+        return response()->json(['message' => 'Book Updated Successfully!', 'book' => $book], 200);
     }
 
     /**
@@ -160,7 +160,7 @@ class BookController extends Controller
         $this->authorize($book);
         $book->delete();
 
-        return response()->noContent();
+        return response()->json(['message' => 'Book Deleted Successfully!'], 200);
     }
 
     public function search(Request $request)

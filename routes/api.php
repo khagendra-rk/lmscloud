@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Book\BookController;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\Index\IndexController;
 use App\Http\Controllers\Borrow\BorrowController;
 use App\Http\Controllers\Faculty\FacultyController;
 use App\Http\Controllers\Permission\PermissionController;
@@ -25,9 +24,6 @@ use App\Http\Controllers\Teacher\TeacherController;
 |
 */
 
-Route::get('testing', function () {
-    return response()->json(['message' => 'Hello World!!How are you?How you doing?']);
-});
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forget-password', [AuthController::class, 'forgetPassword'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
