@@ -26,7 +26,7 @@ use App\Http\Controllers\Teacher\TeacherController;
 */
 
 Route::get('testing', function () {
-    return response()->json(['message' => 'Hello World!!How are you?']);
+    return response()->json(['message' => 'Hello World!!How are you?How you doing?']);
 });
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forget-password', [AuthController::class, 'forgetPassword'])->name('password.reset');
