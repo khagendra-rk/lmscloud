@@ -114,9 +114,9 @@ class BookController extends Controller
             'prefix'        => ['nullable'],
             'added_by'      => ['nullable'],
             'book_type'     => ['nullable'],
-            'faculties'     => ['nullable', 'array'],
+            'faculties'     => ['required', 'array'],
             'faculties.*'   => ['nullable', 'integer', 'exists:faculties,id'],
-            'semesters'     => ['nullable', 'array'],
+            'semesters'     => ['required', 'array'],
             'semesters.*'   => ['nullable', 'integer', 'min:1', 'max:8'],
         ]);
 
