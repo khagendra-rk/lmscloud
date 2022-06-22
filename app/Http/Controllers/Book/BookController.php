@@ -22,7 +22,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::paginate(10);
+        $books = Book::paginate(15);
 
         return response()->json($books);
     }
@@ -195,7 +195,7 @@ class BookController extends Controller
 
         $book->faculties()->detach($data['faculty_id']);
 
-        return response()->noContent();
+        return response()->json(['message' => 'Faculty has been deleted successfully from the book!!'], 200);
     }
 
     public function addFaculty(Book $book, Request $request)
@@ -214,7 +214,7 @@ class BookController extends Controller
 
         $book->faculties()->attach($data['faculty_id'], ['semester' => $data['semester']]);
 
-        return response()->noContent();
+        return response()->json(['message' => 'Faculty has been added to book successfully!'], 200);
     }
 
     /**
@@ -263,7 +263,7 @@ class BookController extends Controller
             'book_prefix' => $book->prefix,
         ]);
 
-        return response()->json($index);
+        return response()->json(['message' => 'Index has been created successfully for the given book', 'index' => $index], 201);
     }
 
     /**
@@ -301,7 +301,7 @@ class BookController extends Controller
 
         $index->fresh();
 
-        return response()->json($index);
+        return response()->json(['message' => 'Index has been updated successfully!', 'index' => $index], 200);
     }
 
     /**
@@ -322,7 +322,7 @@ class BookController extends Controller
 
         $index->delete();
 
-        return response()->noContent();
+        return response()->json(['message' => 'Index has been deleted successfully!'], 200);
     }
 
     /**
@@ -362,7 +362,7 @@ class BookController extends Controller
 
         $all_indices = Index::insert($indices);
 
-        return response()->json($all_indices);
+        return response()->json(['message' => 'Indices has been added by "Quantity" Successfully!', 'indices' => $all_indices], 200);
     }
 
     /**
@@ -412,7 +412,7 @@ class BookController extends Controller
             ->get();
 
 
-        return response()->json($all_indices);
+        return response()->json(['message' => 'Indices has been added by "Range" Successfully', 'indices' => $all_indices], 200);
     }
 
     /**
@@ -460,6 +460,6 @@ class BookController extends Controller
             ->whereIn('code', $request->codes)
             ->get();
 
-        return response()->json($all_indices);
+        return response()->json(['message' => 'Indices has been added by "List" Successfully!', 'indices' => $all_indices], 200);
     }
 }

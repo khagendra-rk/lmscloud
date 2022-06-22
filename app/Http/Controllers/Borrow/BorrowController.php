@@ -99,7 +99,7 @@ class BorrowController extends Controller
             return $borrow;
         });
 
-        return response()->json($borrow);
+        return response()->json(['message' => 'Book has been issued successfully!', 'issues' => $borrow], 201);
     }
 
     /**
@@ -188,7 +188,7 @@ class BorrowController extends Controller
 
         $borrow->fresh();
 
-        return response()->json($borrow);
+        return response()->json(['message' => 'Borrow has been updated successfully!', 'returns' => $borrow], 200);
     }
 
     /**
@@ -205,7 +205,7 @@ class BorrowController extends Controller
             $borrow->index()->update(['is_borrowed' => false]);
         });
 
-        return response()->noContent();
+        return response()->json(['message' => 'Book has been returned succesfully!'], 200);
     }
 
     /**
@@ -264,7 +264,7 @@ class BorrowController extends Controller
             $index->update(['is_borrowed' => false]);
         });
 
-        return response()->noContent();
+        return response()->json(['message' => 'Book has been return successfully!']);
     }
 
     public function checkBorrow($index, $teacher_id, $student_id, $index_id = null)

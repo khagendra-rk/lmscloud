@@ -55,7 +55,7 @@ class BookingController extends Controller
             return Borrow::create($data);
         });
 
-        return response()->json($borrow);
+        return response()->json(['message' => 'Book has been booked successfully!', 'borrow' => $borrow], 201);
     }
 
     public function cancel(Borrow $borrow)
@@ -91,6 +91,6 @@ class BookingController extends Controller
         ]);
         $borrow->index->update(['is_borrowed' => false]);
 
-        return response()->noContent();
+        return response()->json(['message' => 'Booking has been canceled successfully!'], 200);
     }
 }

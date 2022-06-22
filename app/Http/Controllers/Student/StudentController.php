@@ -47,7 +47,7 @@ class StudentController extends Controller
             'year'           => ['required', 'integer', 'min:' . config('app.year')],
             'image'          => ['nullable', 'image', 'mimes:jpeg,png,gif'],
             'registration_no' => ['nullable'],
-            'symbol_no'      => ['required'],
+            'symbol_no'      => ['nullable'],
             'password' => ['required', 'min:6'],
         ]);
 
@@ -66,7 +66,7 @@ class StudentController extends Controller
             Student::create($data);
         });
 
-        return response()->json($data, 201);
+        return response()->json(['message' => 'Student has been Created Successfully!', 'student' => $data], 201);
     }
 
     /**
@@ -94,18 +94,18 @@ class StudentController extends Controller
     {
         $this->authorize($student);
         $data = $request->validate([
-            'name'          => ['required'],
-            'phone_no'      => ['required', 'integer', 'digits:10', 'regex:/((98)|(97))(\d){8}/'],
-            'address'       => ['required'],
-            'email'         => ['required', 'email', 'unique:students,email'],
+            'name'          => ['nullable'],
+            'phone_no'      => ['nullable', 'integer', 'digits:10', 'regex:/((98)|(97))(\d){8}/'],
+            'address'       => ['nullable'],
+            'email'         => ['nullable', 'email', 'unique:students,email'],
             'college_email' => ['required', 'email', 'unique:students,college_email'],
-            'faculty_id'    => ['required', 'exists:faculties,id'],
-            'parent_name'   => ['required'],
+            'faculty_id'    => ['nullable', 'exists:faculties,id'],
+            'parent_name'   => ['nullable'],
             'parent_contact' => ['required', 'integer', 'digits:10', 'regex:/((98)|(97))(\d){8}/'],
-            'year'           => ['required', 'integer', 'min:' . config('app.year')],
+            'year'           => ['nullable', 'integer', 'min:' . config('app.year')],
             'image'          => ['nullable', 'image', 'mimes:jpeg,png,gif'],
-            'registration_no' => ['nullable'],
-            'symbol_no'      => ['nullable'],
+            'registration_no' => ['required'],
+            'symbol_no'      => ['required'],
         ]);
         if ($request->hasFile('image')) {
             if (!empty($student->image)) {
@@ -119,7 +119,7 @@ class StudentController extends Controller
 
         $student->update($data);
         $student->fresh();
-        return response()->json($student);
+        return response()->json(['message' => 'Student has been Updated Successfully!', 'student' => $student], 200);
     }
 
     /**
@@ -133,7 +133,7 @@ class StudentController extends Controller
         $this->authorize($student);
         $student->delete();
 
-        return response()->noContent();
+        return response()->json(['message' => 'Student has been deleted Successfully!'], 200);
     }
 
     public function documents(Student $student)
@@ -158,7 +158,7 @@ class StudentController extends Controller
             'file' => $file,
         ]);
 
-        return response()->json($document);
+        return response()->json(['message' => 'Document has been added Successfully!', 'documents' => $document], 200);
     }
 
     public function updateDocument(Request $request, Student $student, Document $document)
@@ -195,7 +195,7 @@ class StudentController extends Controller
         ]);
         $document->fresh();
 
-        return response()->json($document);
+        return response()->json(['message' => 'Document has been updated Successfully!', 'documents' => $document], 200);
     }
 
     public function showDocument(Student $student, Document $document)
@@ -207,13 +207,13 @@ class StudentController extends Controller
     {
         $document->delete();
 
-        return response()->noContent();
+        return response()->json(['message' => 'Document has been Deleted Succesully'], 200);
     }
 
     public function bookingRequest(Student $student)
     {
         $bookings = Borrow::whereNotNull('booking_at')->whereNull('issued_at')->get();
 
-        return response()->json($bookings);
+        return response()->json(['message' => 'Booking Request', 'booking' => $bookings]);
     }
 }

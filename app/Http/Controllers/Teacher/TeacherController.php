@@ -59,7 +59,7 @@ class TeacherController extends Controller
             return Teacher::create($data);
         });
 
-        return response()->json($teacher, 201);
+        return response()->json(['message' => 'Teacher has been Created Successfully!', 'teacher' => $teacher], 201);
     }
 
     /**
@@ -105,7 +105,7 @@ class TeacherController extends Controller
 
         $teacher->update($data);
         $teacher->fresh();
-        return response()->json($teacher);
+        return response()->json(['message' => 'Teacher has been Updated Successfully!', 'teacher' => $teacher], 200);
     }
 
     /**
@@ -119,6 +119,6 @@ class TeacherController extends Controller
         $this->authorize($teacher);
         $teacher->delete();
 
-        return response()->noContent();
+        return response()->json(['message' => 'Teacher has been Deleted Successfully!'], 200);
     }
 }

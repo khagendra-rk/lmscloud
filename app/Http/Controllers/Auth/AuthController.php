@@ -97,7 +97,7 @@ class AuthController extends Controller
         if ($email_password_status == Password::INVALID_TOKEN) {
             return $this->response()->json(['message' => 'INVALID RESET_PASSWORD_TOKEN']);
         }
-        return response()->json(['message' => 'Password successfully changed']);
+        return response()->json(['message' => 'Password changed Successfully!'], 200);
     }
 
     public function changePassword(Request $request)
@@ -120,7 +120,7 @@ class AuthController extends Controller
         if (Hash::check($request->current_password, $user->password)) {
             $user->password = Hash::make($request->new_password);
             $user->update();
-            return response()->json(['message' => 'Password successfully changed']);
+            return response()->json(['message' => 'Password changed Successfully!'], 200);
         }
         return response()->json(['message' => 'Old password is incorrect']);
     }

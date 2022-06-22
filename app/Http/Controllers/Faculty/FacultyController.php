@@ -35,7 +35,7 @@ class FacultyController extends Controller
         ]);
         $faculty = Faculty::create($data);
 
-        return response()->json($faculty, 201);
+        return response()->json(['message' => 'Faculty has been created successfully!', 'faculty' => $faculty], 201);
     }
 
     /**
@@ -69,7 +69,7 @@ class FacultyController extends Controller
         $faculty->update($data);
         $faculty->fresh();
 
-        return response()->json($faculty);
+        return response()->json(['message' => 'Faculty has been Updated Successfully!', 'faculty' => $faculty], 200);
     }
 
     /**
@@ -84,6 +84,6 @@ class FacultyController extends Controller
 
         $faculty->delete();
 
-        return response()->noContent();
+        return response()->json(['message' => 'Faulty has been Deleted Successfully!'], 200);
     }
 }

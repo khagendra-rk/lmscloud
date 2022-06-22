@@ -34,7 +34,7 @@ class RoleController extends Controller
         ]);
         $role = Role::create($data);
         // $role->permissions()->sync($request->permission);
-        return response()->json($role, 201);
+        return response()->json(['message' => 'Role has been Created Successfully!', 'role' => $role], 201);
     }
 
     /**
@@ -65,7 +65,7 @@ class RoleController extends Controller
         $role->update($data);
         $role->fresh();
 
-        return response()->json($role);
+        return response()->json(['message' => 'Role has been Updated Successfully!', 'role' => $role], 200);
     }
 
     /**
@@ -78,7 +78,7 @@ class RoleController extends Controller
     {
         $this->authorize('delete', $role);
         $role->delete();
-        return response()->noContent();
+        return response()->json(['message' => 'Role has been Deleted Successfully!!'], 200);
     }
 
     public function assignPermission(Request $request, Role $role)
@@ -91,6 +91,6 @@ class RoleController extends Controller
         $role->permissions()->sync($data['permission']);
         $role->fresh();
         $role->load('permissions');
-        return response()->json($role);
+        return response()->json(['message' => 'Permission has been assigned to given role!', 'permissions' => $role], 200);
     }
 }

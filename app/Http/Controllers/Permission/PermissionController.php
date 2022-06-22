@@ -41,7 +41,7 @@ class PermissionController extends Controller
             'for' => ['required'],
         ]);
         $permission = Permission::create($data);
-        return response()->json($permission, 201);
+        return response()->json(['message' => 'Permission has been Created Succesfully', 'permission' => $permission], 201);
     }
 
     /**
@@ -69,10 +69,12 @@ class PermissionController extends Controller
         $this->authorize('update', $permission);
         $data = $request->validate([
             'name' => ['required'],
+            'slug' => ['nullable'],
+            'for' => ['nullable'],
         ]);
         $permission->update($data);
         $permission->fresh();
-        return response()->json($permission);
+        return response()->json(['message' => 'Permission has been Updated Successfully!', 'permission' => $permission], 200);
     }
 
     /**
@@ -85,6 +87,6 @@ class PermissionController extends Controller
     {
         $this->authorize('delete', $permission);
         $permission->delete();
-        return response()->noContent();
+        return response()->json(['message' => 'Permission has been Deleted Successfully!'], 200);
     }
 }
