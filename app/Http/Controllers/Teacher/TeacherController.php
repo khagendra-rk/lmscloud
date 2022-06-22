@@ -39,7 +39,7 @@ class TeacherController extends Controller
             'phone_no'      => ['required', 'integer', 'digits:10', 'regex:/((98)|(97))(\d){8}/'],
             'address'       => ['required'],
             'email'         => ['required', 'email', 'unique:teachers,email'],
-            'college_email' => ['nullable', 'email', 'unique:teachers,college_email'],
+            'college_email' => ['required', 'email', 'unique:teachers,college_email'],
             'image'         => ['nullable', 'image', 'mimes:jpeg,png,gif'],
             'password'      => ['required', 'min:6'],
         ]);
