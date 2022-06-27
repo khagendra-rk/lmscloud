@@ -8,8 +8,11 @@ use App\Models\Student;
 use App\Models\Document;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
+use App\Exports\StudentsExport;
+use App\Imports\StudentsImport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
@@ -215,5 +218,15 @@ class StudentController extends Controller
         $bookings = Borrow::whereNotNull('booking_at')->whereNull('issued_at')->get();
 
         return response()->json(['message' => 'Booking Request', 'booking' => $bookings]);
+    }
+
+    public function import()
+    {
+        Excel::import(new StudentsImport, request()->file('file'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new StudentsExport, 'students.xlsx');
     }
 }

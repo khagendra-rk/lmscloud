@@ -62,6 +62,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('/permissions', PermissionController::class);
 
         //Teacher Routes
+        Route::get('/teachers-export', [TeacherController::class, 'export'])->name('teachers-export');
+        Route::post('/teachers-import', [TeacherController::class, 'import'])->name('teachers-import');
         Route::apiResource('/teachers', TeacherController::class);
 
         //Book Routes
@@ -88,7 +90,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('/borrows', BorrowController::class);
     });
 
-    //Student Routes    
+    //Student Routes
+    Route::get('/students-export', [StudentController::class, 'export'])->name('students-export');
+    Route::post('/students-import', [StudentController::class, 'import'])->name('students-import');
     Route::controller(StudentController::class)->prefix('/students/{student}/')->group(function () {
         Route::post('/bookings', 'bookingRequest');
         Route::get('/documents', 'documents');

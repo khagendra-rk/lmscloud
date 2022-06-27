@@ -6,8 +6,11 @@ use App\Models\User;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
+use App\Exports\TeachersExport;
+use App\Imports\TeachersImport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
@@ -120,5 +123,15 @@ class TeacherController extends Controller
         $teacher->delete();
 
         return response()->json(['message' => 'Teacher has been Deleted Successfully!'], 200);
+    }
+
+    public function import()
+    {
+        Excel::import(new TeachersImport, request()->file('file'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new TeachersExport, 'teachers.xlsx');
     }
 }
