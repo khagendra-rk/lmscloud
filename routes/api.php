@@ -47,10 +47,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware(['role:admin,librarian'])->group(function () {
 
         //User Routes
-        Route::controller(UserController::class)->group(function () {
-            Route::get('users-export', 'export')->name('users.export');
-            Route::post('users-import', 'import')->name('users.import');
-        });
+        Route::post('users-import', [UserController::class, 'import'])->name('users-import');
+        Route::get('users-export', [UserController::class, 'export'])->name('users-export');
         Route::apiResource('/users', UserController::class);
 
         //Faculty Routes
