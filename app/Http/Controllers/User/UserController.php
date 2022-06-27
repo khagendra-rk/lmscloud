@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\User;
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -99,5 +102,20 @@ class UserController extends Controller
         $this->authorize('delete', $user);
         $user->delete();
         return response()->json(['message' => 'User deleted successfully'], 200);
+    }
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import()
+    {
+        Excel::import(new UsersImport, request()->file('file'));
+
+        return back();
     }
 }

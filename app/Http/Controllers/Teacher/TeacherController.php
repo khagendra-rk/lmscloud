@@ -89,7 +89,7 @@ class TeacherController extends Controller
             'phone_no'      => ['nullalble', 'integer', 'digits:10', 'regex:/((98)|(97))(\d){8}/'],
             'address'       => ['nullalble'],
             'email'         => ['nullalble', 'email', 'unique:teachers,email'],
-            'college_email' => ['required', 'email', 'unique:teachers,college_email'],
+            'college_email' => ['required', 'email', 'unique:teachers,college_email'], //'regex:/[\w]*(@lict.edu.np)/ for email verification of lict.edu.np
             'image'         => ['nullable', 'image', 'mimes:jpeg,png,gif'],
         ]);
 
