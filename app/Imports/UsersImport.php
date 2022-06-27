@@ -16,12 +16,11 @@ class UsersImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        $users = User::create([
+        return new User([
             'name' => $row['name'],
             'email' => $row['email'],
             'password' => Hash::make($row['password']),
             'role_id' => $row['role_id']
         ]);
-        return response()->json(['message' => 'User Imported Succesfully!', 'users' => $users]);
     }
 }
